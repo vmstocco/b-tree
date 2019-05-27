@@ -1,5 +1,5 @@
 /*
-VinÌcius Marques Stocco - n∫ USP: 6427233 - Professor: Ricardo Campello
+Vin√≠cius Marques Stocco - Professor: Ricardo Campello
 */
 
 #include <stdio.h>
@@ -47,7 +47,7 @@ typedef struct{
 
 }ChaveOffset;
 
-/* nesta implementaÁ„o, no campo ChaveOffset, foi propositalmente colocado um Ìndice
+/* nesta implementa√ß√£o, no campo ChaveOffset, foi propositalmente colocado um √≠ndice
    a mais para tratar do overflow
 */
 typedef struct ArvoreB_Node{
@@ -57,8 +57,8 @@ typedef struct ArvoreB_Node{
            offsetTipo pageOffset;
 }ArvoreB_Node;
 
-/*estrutura auxiliar para o formato de dados no arquivo de Ìndice;
-o offset do ˙ltimo filho È lido separadamente */
+/*estrutura auxiliar para o formato de dados no arquivo de √≠ndice;
+o offset do √∫ltimo filho √© lido separadamente */
 typedef struct auxStruct{
            offsetTipo proxPagina;
            ChaveOffset registroRef;
@@ -74,8 +74,8 @@ typedef  ArvoreB_Node  arvoreB;
 /*==============================================================================
                                  Split
 ================================================================================*/
-/*o split n„o faz a promoÁ„o da chave adequada na ·rvore, esta aÁ„o È feita na rotina buscaInsere,
-esta rotina somente calcula a chave a ser promovida e faz a divis„o entre os nÛs atual e nÛ direito do atual */
+/*o split n√£o faz a promo√ß√£o da chave adequada na √°rvore, esta a√ß√£o √© feita na rotina buscaInsere,
+esta rotina somente calcula a chave a ser promovida e faz a divis√£o entre os n√≥s atual e n√≥ direito do atual */
 void split(ArvoreB_Node *Node,ArvoreB_Node *DirNode,ChaveOffset* promo){
 
      int promoIndex = (MAX_CHAVES+1)/2;
@@ -97,7 +97,7 @@ void split(ArvoreB_Node *Node,ArvoreB_Node *DirNode,ChaveOffset* promo){
 /*==============================================================================
                                  readPage
 ================================================================================*/
-//lÍ o nÛ com endereÁo "offset" da ·rvore no disco e atribui ‡ vari·vel "destNode"
+//l√™ o n√≥ com endere√ßo "offset" da √°rvore no disco e atribui √† vari√°vel "destNode"
 int readPage(FILE *f,offsetTipo offset,ArvoreB_Node* destNode){
    auxStruct buffer[MAX_CHAVES];
    int i;
@@ -152,9 +152,9 @@ void removeRegistro(FILE *f,offsetTipo offsetRegistro){
 /*==============================================================================
                                  writePage
 ================================================================================*/
-/* rotina para atualizar o arquivo de Ìndice, escrevendo os valores no header e na p·gina correspondente
-   Obs: o ˙ltimo argumento se trata de um flag que diz se a operaÁ„o È de atualizaÁ„o ou de inserÁ„o
-   de um novo nÛ
+/* rotina para atualizar o arquivo de √≠ndice, escrevendo os valores no header e na p√°gina correspondente
+   Obs: o √∫ltimo argumento se trata de um flag que diz se a opera√ß√£o √© de atualiza√ß√£o ou de inser√ß√£o
+   de um novo n√≥
 */
 offsetTipo writePage (FILE *f,indice_header *header,const ArvoreB_Node *node,const int flag)
 {
@@ -229,7 +229,7 @@ void inicializaNo(ArvoreB_Node* node){
 /*==============================================================================
                                  criarIndice
 ================================================================================*/
-//inicializa o arquivo de Ìndice
+//inicializa o arquivo de √≠ndice
 int criarIndice(const char *nome_arq,ArvoreB_Node *raiz,indice_header *indiceHeader){
    FILE *indice;
    int i;
@@ -286,7 +286,7 @@ int buscaBinaria(const ChaveOffset regRef[],int n, const chaveTipo chave, int *f
     if ( chaveCmp(chave,regRef[meio].chave) == CHAVES_IGUAIS )
     {
        *find = 1;
-       return (meio); //Encontrou a chave e retorna sua posÌÁ„o
+       return (meio); //Encontrou a chave e retorna sua pos√≠√ß√£o
     }
     else
     {
@@ -300,7 +300,7 @@ int buscaBinaria(const ChaveOffset regRef[],int n, const chaveTipo chave, int *f
   if ( n>0 && chaveCmp(chave,regRef[meio].chave) == CHAVE1_MAIOR )
        meio++;
 
-  return meio; //N„o encontrou a chave, retorna a posiÁ„o do ponteiro para o filho
+  return meio; //N√£o encontrou a chave, retorna a posi√ß√£o do ponteiro para o filho
 
 }
 /*==============================================================================
@@ -317,7 +317,7 @@ int inserirChaveNo(ArvoreB_Node *Node,const ChaveOffset *chave,int chavePos)
     int aux = Node->numChaves;
     int overflow;
 
-    //busca a posiÁao apropriada para inserir a chave
+    //busca a posi√ßao apropriada para inserir a chave
     while ((aux > chavePos) && (aux <=MAX_CHAVES))
     {
 
@@ -374,14 +374,14 @@ int canRedistribute(FILE *indice,const ArvoreB_Node* fatherNode,ArvoreB_Node *si
 /*==============================================================================
                               removeKey
 ================================================================================*/
-/* rotina auxiliar para resolveUnderflow, realiza a remoÁ„o da chave dada no nÛ "curNode"
+/* rotina auxiliar para resolveUnderflow, realiza a remo√ß√£o da chave dada no n√≥ "curNode"
 */
 int removeKey (ArvoreB_Node *curNode, int pos)
 {
 
     if (pos < curNode->numChaves)
     {
-       //shift dos elementos para tr·s
+       //shift dos elementos para tr√°s
        while (pos < curNode->numChaves - 1)
        {
              curNode->chaveOffset[pos] = curNode->chaveOffset[pos + 1];
@@ -395,11 +395,11 @@ int removeKey (ArvoreB_Node *curNode, int pos)
 /*==============================================================================
                               redistribute
 ================================================================================*/
-/* rotina auxiliar para resolveUnderflow, realiza a redistribuiÁ„o das chaves na ·rvore
+/* rotina auxiliar para resolveUnderflow, realiza a redistribui√ß√£o das chaves na √°rvore
 
-Obs1: f = arquivo de Ìndice
-Obs2: a rotina somente resolve o underflow, promovendo apenas uma chave do nÛ "AvailNode", deixando assim
-o nÛ curNode (nÛ com underflow) com o n˙mero mÌnimo de chaves
+Obs1: f = arquivo de √≠ndice
+Obs2: a rotina somente resolve o underflow, promovendo apenas uma chave do n√≥ "AvailNode", deixando assim
+o n√≥ curNode (n√≥ com underflow) com o n√∫mero m√≠nimo de chaves
 */
 /*void redistribute (FILE *f, indice_header *header, ArvoreB_Node *curNode, ArvoreB_Node *father, int posPai)
 {
@@ -457,10 +457,10 @@ int redistribute(FILE *f, indice_header *header, ArvoreB_Node *node, ArvoreB_Nod
 /*==============================================================================
                               concatena
 ================================================================================*/
-/* rotina auxiliar para resolveUnderflow, realiza a concatenaÁ„o das chaves na ·rvore
-   o nÛ curNode È o nÛ a ser liberado
-Obs1: f = arquivo de Ìndice
-Obs2: por default a concatenaÁ„o acontecer· no filho direito
+/* rotina auxiliar para resolveUnderflow, realiza a concatena√ß√£o das chaves na √°rvore
+   o n√≥ curNode √© o n√≥ a ser liberado
+Obs1: f = arquivo de √≠ndice
+Obs2: por default a concatena√ß√£o acontecer√° no filho direito
 */
 /*int concatena (FILE *f, indice_header *header, ArvoreB_Node *curNode, ArvoreB_Node *father, int posPai)
 {
@@ -719,8 +719,8 @@ int buscaRemove(FILE *indice,indice_header *header,ArvoreB_Node *raiz,chaveTipo 
 /*==============================================================================
                               buscaInsere
 ================================================================================*/
-/* realiza a busca da posiÁ„o com a busca bin·ria e insere no nÛ adequado, utilizando as rotinas auxiliares e
-  tratando de overflow, alÈm de escrever no arquivo de Ìndice
+/* realiza a busca da posi√ß√£o com a busca bin√°ria e insere no n√≥ adequado, utilizando as rotinas auxiliares e
+  tratando de overflow, al√©m de escrever no arquivo de √≠ndice
 */
 int buscaInsere(FILE *indice,indice_header *header,ArvoreB_Node *curNode,ChaveOffset *chave,
                                      offsetTipo *dirOffset,ChaveOffset *promo){
@@ -843,7 +843,7 @@ int inserirChaveIndice(FILE *indice,indice_header *header,ArvoreB_Node *raiz,Cha
 ================================================================================*/
 /* rotina que insere o registro no arquivo de dados
 Obs1: campos codigo e ano sao fixos, porem sao subtraidos de cont
-Obs2: f È o arquivo de dados
+Obs2: f √© o arquivo de dados
 */
 int inserirRegistro (FILE *f, reg *novo)
 {
